@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://bvkfd1w57shm1"]
+
+[ext_resource type="Script" uid="uid://cmvfay2ke6q85" path="res://scripts/fps_controller.gd" id="1_c32mq"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_3w87u"]
+
+[node name="FpsTest" type="Node3D"]
+
+[node name="FPSController" type="CharacterBody3D" parent="."]
+script = ExtResource("1_c32mq")
+metadata/_custom_type_script = "uid://cmvfay2ke6q85"
+
+[node name="Camera3D" type="Camera3D" parent="FPSController"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="FPSController"]
+shape = SubResource("CapsuleShape3D_3w87u")
