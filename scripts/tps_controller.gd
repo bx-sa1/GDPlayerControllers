@@ -1,14 +1,18 @@
 @tool
-class_name FPSController extends BaseController
+class_name TPSController extends BaseController
 
 @export var MAX_SPEED = 2
 @export var SENSITIVITY = 1
 @export var GRAVITY = 10
 @export var JUMP_ACCEL = 5
+@export var CAM_RADIUS = 10.0
+
+var pitch = 0.0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	super()
+	camera.position.z -= CAM_RADIUS
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -38,5 +42,9 @@ func _input(event: InputEvent) -> void:
 
 	if event is InputEventMouseMotion:
 		rotate_y(deg_to_rad(-event.relative.x * 0.1 * SENSITIVITY))
-		camera.rotate_x(deg_to_rad(-event.relative.y * 0.1 * SENSITIVITY))
-		camera.rotation.x = clampf(camera.rotation.x, -PI/2, PI/2)
+		pitch += deg_to_rad(-event.relative.y * 0.1 * SENSITIVITY)
+		pitch = clampf(pitch, -PI/2, PI/2)
+		camera.position.x = cos(pitch) * CAM_RADIUS
+		camera.position.y = sin(pitch) * CAM_RADIUS
+		camera.position.z = cos(pitch) * CAM_RADIUS
+		camera.look_at(position)

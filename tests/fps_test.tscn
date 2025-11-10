@@ -1,16 +1,40 @@
-[gd_scene load_steps=3 format=3 uid="uid://bvkfd1w57shm1"]
+[gd_scene load_steps=7 format=3 uid="uid://bvkfd1w57shm1"]
 
-[ext_resource type="Script" uid="uid://cmvfay2ke6q85" path="res://scripts/fps_controller.gd" id="1_c32mq"]
+[ext_resource type="Script" uid="uid://brtswojencpp4" path="res://scripts/tps_controller.gd" id="1_c32mq"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_3w87u"]
 
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_c32mq"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_c32mq"]
+
+[sub_resource type="Sky" id="Sky_3w87u"]
+sky_material = SubResource("ProceduralSkyMaterial_c32mq")
+
+[sub_resource type="Environment" id="Environment_2jyg6"]
+background_mode = 2
+sky = SubResource("Sky_3w87u")
+
 [node name="FpsTest" type="Node3D"]
 
-[node name="FPSController" type="CharacterBody3D" parent="."]
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.4436188, 0, -4.5142517)
+use_collision = true
+size = Vector3(11.532013, 1, 13.500916)
+
+[node name="TPSController" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.4413176, 0)
 script = ExtResource("1_c32mq")
-metadata/_custom_type_script = "uid://cmvfay2ke6q85"
+CAPTURE_MOUSE = false
 
-[node name="Camera3D" type="Camera3D" parent="FPSController"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="FPSController"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TPSController"]
 shape = SubResource("CapsuleShape3D_3w87u")
+
+[node name="Camera3D" type="Camera3D" parent="TPSController"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.51396275, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="TPSController"]
+mesh = SubResource("CapsuleMesh_c32mq")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_2jyg6")

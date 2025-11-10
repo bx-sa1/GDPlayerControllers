@@ -24,8 +24,14 @@ func _get_configuration_warnings() -> PackedStringArray:
 
 	return warnings
 
+@export var CAPTURE_MOUSE = true
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	if not Engine.is_editor_hint() && CAPTURE_MOUSE == true:
+		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+
+func _enter_tree() -> void:
 	connect("child_entered_tree", _on_child_entered_tree)
 	connect("child_exiting_tree", _on_child_exiting_tree)
 
