@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://bvkfd1w57shm1"]
 
-[ext_resource type="Script" uid="uid://ditsvkfwd30ne" path="res://scripts/fps_controller.gd" id="1_c32mq"]
+[ext_resource type="Script" uid="uid://ditsvkfwd30ne" path="res://scripts/3d/fps_controller.gd" id="1_dvr4a"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_c32mq"]
 
@@ -25,22 +25,20 @@ size = Vector3(11.532013, 1, 13.500916)
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_2jyg6")
 
-[node name="FPSController" type="CharacterBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.3488874, 0)
-script = ExtResource("1_c32mq")
-view_state = 1
-metadata/_custom_type_script = "uid://ditsvkfwd30ne"
-
-[node name="Camera3D" type="Camera3D" parent="FPSController"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -10)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="FPSController"]
-shape = SubResource("CapsuleShape3D_3w87u")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="FPSController"]
-mesh = SubResource("CapsuleMesh_c32mq")
-skeleton = NodePath("")
-
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -0.36744288, 0.9300461, 0, -0.9300461, -0.36744288, 0, 6.729846, 0)
 shadow_enabled = true
+
+[node name="FPSController2" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.261858, 0)
+script = ExtResource("1_dvr4a")
+metadata/_custom_type_script = "uid://ditsvkfwd30ne"
+
+[node name="Camera3D" type="Camera3D" parent="FPSController2"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="FPSController2"]
+shape = SubResource("CapsuleShape3D_3w87u")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="FPSController2"]
+mesh = SubResource("CapsuleMesh_c32mq")
+skeleton = NodePath("")
