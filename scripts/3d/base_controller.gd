@@ -32,11 +32,15 @@ func _get_configuration_warnings() -> PackedStringArray:
 
 	return warnings
 
-@export var MOVE_SPEED = 2
-@export var MOVE_ACCEL = 1
-@export var SENSITIVITY = 1
-@export var GRAVITY = 10
+@export var MOVE_SPEED = 16.0
+@export var MOVE_ACCEL = 32.0
+@export var SENSITIVITY = 1.0
+@export var GRAVITY = Vector3(0, -98.1, 0)
 @export var CAPTURE_MOUSE = true
+@export var MASS = 1.0
+@export var GROUND_FRICTION = 5.0
+@export var AIR_FRICTION = 0.0
+@export var JUMP_ACCEL = 25
 
 var yaw = 0.0
 var pitch = 0.0
@@ -74,3 +78,38 @@ func _input(event: InputEvent) -> void:
 			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 		elif event.is_action_pressed("ui_cancel"):
 			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+
+func accelerate(move_dir: Vector3, delta: float) -> void:
+	var addspeed = MOVE_SPEED - velocity.dot(move_dir)
+	if addspeed <= 0:
+		return
+	var accel = (MOVE_ACCEL/MASS) * delta
+	if accel > addspeed:
+		accel = addspeed
+	velocity += accel*move_dir
+
+func friction(delta: float) -> void:
+	var speed = velocity.length()
+	if speed == 0:
+		return
+
+	var f = 0.0
+	if is_on_floor():
+		f = GROUND_FRICTION
+	else:
+		f = AIR_FRICTION
+	var drop = speed * (f/MASS) * delta
+	var newspeed = speed - drop
+	if newspeed < 0.0:
+		newspeed = 0.0
+	newspeed /= speed
+	velocity *= newspeed
+
+
+func gravity(delta: float) -> void:
+	var g_accel = GRAVITY/MASS
+	velocity += g_accel * delta
+
+func jump(delta: float) -> void:
+	if is_on_floor() && Input.is_action_pressed("jump"):
+		velocity += (-GRAVITY * JUMP_ACCEL/MASS) * delta

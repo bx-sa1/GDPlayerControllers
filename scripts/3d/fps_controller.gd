@@ -1,7 +1,6 @@
 @tool
 class_name FPSController extends BaseController
 
-@export var JUMP_ACCEL = 5
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -21,10 +20,8 @@ func _physics_process(delta: float) -> void:
 
 	var idir = Input.get_vector("move_left", "move_right", "move_forward", "move_back")
 	var dir = (transform.basis * Vector3(idir.x, 0.0, idir.y)).normalized()
-	var y_vel = velocity.y
-	velocity.y = 0.0
-	velocity = velocity.move_toward(MOVE_SPEED * dir, MOVE_ACCEL * delta)
-	velocity.y = y_vel - GRAVITY * delta
-	if is_on_floor() && Input.is_action_pressed("jump"):
-		velocity.y += JUMP_ACCEL
+	friction(delta)
+	accelerate(dir, delta)
+	gravity(delta)
+	jump(delta)
 	move_and_slide()
