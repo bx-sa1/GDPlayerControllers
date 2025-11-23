@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://bvkfd1w57shm1"]
 
-[ext_resource type="Script" uid="uid://ditsvkfwd30ne" path="res://scripts/3d/fps_controller.gd" id="1_dvr4a"]
+[ext_resource type="Script" uid="uid://ditsvkfwd30ne" path="res://scenes/3d/fps_controller.gd" id="1_dvr4a"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_c32mq"]
 
@@ -29,9 +29,10 @@ environment = SubResource("Environment_2jyg6")
 transform = Transform3D(1, 0, 0, 0, -0.36744288, 0.9300461, 0, -0.9300461, -0.36744288, 0, 6.729846, 0)
 shadow_enabled = true
 
-[node name="FPSController2" type="CharacterBody3D" parent="."]
+[node name="FPSController2" type="CharacterBody3D" parent="." node_paths=PackedStringArray("camera_pivot")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.261858, 0)
 script = ExtResource("1_dvr4a")
+camera_pivot = NodePath("Camera3D")
 metadata/_custom_type_script = "uid://ditsvkfwd30ne"
 
 [node name="Camera3D" type="Camera3D" parent="FPSController2"]

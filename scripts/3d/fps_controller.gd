@@ -1,6 +1,6 @@
-@tool
 class_name FPSController extends BaseController
 
+@export var camera_pivot: Node3D
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -8,16 +8,10 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	if Engine.is_editor_hint():
-		return
-
 	rotation.y = yaw
-	camera_controller.rotation.x = pitch
+	camera_pivot.rotation.x = pitch
 
 func _physics_process(delta: float) -> void:
-	if Engine.is_editor_hint():
-		return
-
 	var idir = Input.get_vector("move_left", "move_right", "move_forward", "move_back")
 	var dir = (transform.basis * Vector3(idir.x, 0.0, idir.y)).normalized()
 	friction(delta)

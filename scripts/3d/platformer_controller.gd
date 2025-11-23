@@ -1,6 +1,8 @@
-@tool
 class_name PlatformerController extends BaseController
 
+@export var camera_pivot: Node3D
+@export var camera: Camera3D
+@export var visual: VisualInstance3D
 @export var TURN_SPEED = 30
 
 var last_move_dir = Vector3.FORWARD
@@ -11,26 +13,18 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	if Engine.is_editor_hint():
-		return
-
-	camera_controller.rotation.y = yaw
-	camera_controller.rotation.x = pitch
+	camera_pivot.rotation.y = yaw
+	camera_pivot.rotation.x = pitch
 
 func _physics_process(delta: float) -> void:
-	if Engine.is_editor_hint():
-		return
-
 	var idir = Input.get_vector("move_left", "move_right", "move_forward", "move_back")
-	var dir = (camera_controller.camera.global_basis * Vector3(idir.x, 0.0, idir.y)).normalized()
+	var dir = (camera.global_basis * Vector3(idir.x, 0.0, idir.y)).normalized()
 	dir.y = 0.0
 	dir = dir.normalized()
 	friction(delta)
 	accelerate(dir, delta)
 	gravity(delta)
 	jump(delta)
-
-
 
 	move_and_slide()
 
