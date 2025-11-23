@@ -13,22 +13,17 @@ class_name BaseController extends CharacterBody3D
 @export var MASS = 1.0
 @export var GROUND_FRICTION = 5.0
 @export var AIR_FRICTION = 0.0
-@export var JUMP_ACCEL = 25
+@export var JUMP_ACCEL = 25.0
 
 var yaw = 0.0
 var pitch = 0.0
 var roll = 0.0
 
 func _input(event: InputEvent) -> void:
-	if event is InputEventMouseMotion:
-		yaw += deg_to_rad(-event.relative.x * 0.1 * SENSITIVITY)
-		pitch += deg_to_rad(-event.relative.y * 0.1 * SENSITIVITY)
-		pitch = clampf(pitch, -PI/2, PI/2)
-	else:
-		if event.is_action_pressed("ui_focus_mode"):
-			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-		elif event.is_action_pressed("ui_cancel"):
-			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	if event.is_action_pressed("ui_focus_mode"):
+		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	elif event.is_action_pressed("ui_cancel"):
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 
 func accelerate(move_dir: Vector3, delta: float) -> void:
 	var addspeed = MOVE_SPEED - velocity.dot(move_dir)

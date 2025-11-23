@@ -11,6 +11,13 @@ var last_move_dir = Vector3.FORWARD
 func _ready() -> void:
 	pass
 
+func _input(event: InputEvent) -> void:
+	super(event)
+	if event is InputEventMouseMotion:
+		camera_pivot.basis = Basis(camera_pivot.basis.y.normalized(), deg_to_rad(-event.relative.x * SENSITIVITY)) * camera_pivot.basis
+		camera_pivot.basis = Basis(camera_pivot.basis.x.normalized(), deg_to_rad(-event.relative.y * SENSITIVITY)) * camera_pivot.basis
+		camera_pivot.rotation.x = clampf(camera_pivot.rotation.x, -PI/2, PI/2)
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	camera_pivot.rotation.y = yaw
