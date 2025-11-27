@@ -5,13 +5,13 @@ class_name BaseController extends CharacterBody3D
 
 
 
-@export var MOVE_SPEED = 50
-@export var MOVE_ACCEL = 320.0
+@export var MOVE_SPEED = 32
+@export var MOVE_ACCEL = 10
 @export var SENSITIVITY = 1.0
 @export var GRAVITY_ACCEL = Vector3(0, -98.1, 0)
 @export var GROUND_FRICTION = 0.05
 @export var AIR_FRICTION = 0.04
-@export var JUMP_STRENGTH = 25.0
+@export var JUMP_STRENGTH = 25
 
 var yaw = 0.0
 var pitch = 0.0
@@ -59,10 +59,11 @@ func _move_dir() -> Vector3:
 
 # Movement force
 func _accelerate(move_dir: Vector3, delta: float) -> void:
-	var addspeed = MOVE_SPEED - velocity.dot(move_dir)
+	var currentspeed = velocity.dot(move_dir)
+	var addspeed = MOVE_SPEED - currentspeed
 	if addspeed <= 0:
 		return
-	var accel = MOVE_ACCEL * delta
+	var accel = MOVE_ACCEL * MOVE_ACCEL * delta
 	if accel > addspeed:
 		accel = addspeed
 	move_velocity += accel*move_dir
