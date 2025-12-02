@@ -1,0 +1,119 @@
+[gd_scene load_steps=14 format=3 uid="uid://bo06ihr0dons1"]
+
+[ext_resource type="Script" uid="uid://ditsvkfwd30ne" path="res://scripts/3d/fps/fps_controller.gd" id="1_hqtel"]
+[ext_resource type="Script" uid="uid://of7rjyd6medn" path="res://scripts/3d/fps/weapon_manager.gd" id="2_hqtel"]
+[ext_resource type="Script" uid="uid://ckf1jwcbvo6dj" path="res://scripts/3d/fps/weapon.gd" id="3_sweqy"]
+[ext_resource type="Resource" uid="uid://mfquymcmw27j" path="res://weapons/shit-pistol/shit_pistol_data.tres" id="4_1jxqw"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_v5isc"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_vqipf"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kx1co"]
+albedo_texture = SubResource("PlaceholderTexture2D_vqipf")
+texture_filter = 2
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_dey15"]
+material = SubResource("StandardMaterial3D_kx1co")
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_avmk3"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hqtel"]
+shading_mode = 0
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_2hs0m"]
+material = SubResource("StandardMaterial3D_hqtel")
+radius = 0.1
+height = 0.2
+
+[sub_resource type="GDScript" id="GDScript_1jxqw"]
+script/source = "extends MeshInstance3D
+
+func _ready() -> void:
+	top_level = true
+func _on_weapon_manager_fire_hitscan_hit(hit: Dictionary) -> void:
+	visible = true
+	global_position = hit.position
+"
+
+[sub_resource type="GDScript" id="GDScript_hqtel"]
+script/source = "extends Control
+
+@onready var ammo = $WeaponInfo/Ammo
+@onready var weapon_name = $\"WeaponInfo/Weapon Name\"
+@onready var weapon_manager = $\"../CameraController3D/Camera3D/WeaponManager\"
+
+var weapon_name_format = \"\"
+var ammo_format = \"\"
+
+func _ready() -> void:
+	weapon_name_format = weapon_name.text
+	ammo_format = ammo.text
+	
+func _process(delta: float) -> void:
+	var weapon = weapon_manager.weapon_list[weapon_manager.current_weapon_id]
+	self.ammo.text = ammo_format % [weapon.ammo_count, weapon.max_ammo_count]
+	self.weapon_name.text = weapon_name_format % weapon.name
+"
+
+[node name="PlatformerController" type="CharacterBody3D" node_paths=PackedStringArray("camera_pivot")]
+script = ExtResource("1_hqtel")
+camera_pivot = NodePath("CameraController3D")
+MOVE_SPEED = 50
+FRICTION = 0.1
+JUMP_STRENGTH = 12
+metadata/_custom_type_script = "uid://ditsvkfwd30ne"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.99999994, 2.9802322e-08, 0, -2.9802322e-08, 0.99999994, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_v5isc")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.99999994, 2.9802322e-08, 0, -2.9802322e-08, 0.99999994, 0, 0, 0)
+mesh = SubResource("CapsuleMesh_dey15")
+skeleton = NodePath("")
+
+[node name="CameraController3D" type="SpringArm3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.99999994, 0, 0.5, -0.515)
+shape = SubResource("SphereShape3D_avmk3")
+spring_length = 0.0
+
+[node name="Camera3D" type="Camera3D" parent="CameraController3D"]
+near = 0.001
+
+[node name="WeaponManager" type="Node3D" parent="CameraController3D/Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.23562324, 0, -0.32088697)
+script = ExtResource("2_hqtel")
+weapon_list = Array[ExtResource("3_sweqy")]([ExtResource("4_1jxqw")])
+metadata/_custom_type_script = "uid://of7rjyd6medn"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CameraController3D/Camera3D/WeaponManager"]
+visible = false
+mesh = SubResource("SphereMesh_2hs0m")
+script = SubResource("GDScript_1jxqw")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_hqtel")
+
+[node name="WeaponInfo" type="BoxContainer" parent="Control"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+vertical = true
+
+[node name="Weapon Name" type="Label" parent="Control/WeaponInfo"]
+layout_mode = 2
+text = "Weapon: %s"
+
+[node name="Ammo" type="Label" parent="Control/WeaponInfo"]
+layout_mode = 2
+text = "Ammo: %s/%s"
+
+[connection signal="fire_hitscan_hit" from="CameraController3D/Camera3D/WeaponManager" to="CameraController3D/Camera3D/WeaponManager/MeshInstance3D" method="_on_weapon_manager_fire_hitscan_hit"]

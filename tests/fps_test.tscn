@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://bvkfd1w57shm1"]
 
-[ext_resource type="Script" uid="uid://ditsvkfwd30ne" path="res://scenes/3d/fps_controller.gd" id="1_dvr4a"]
+[ext_resource type="Script" uid="uid://ditsvkfwd30ne" path="res://scripts/3d/fps/fps_controller.gd" id="1_dvr4a"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_c32mq"]
 
