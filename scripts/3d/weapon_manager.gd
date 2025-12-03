@@ -10,6 +10,9 @@ var exclude_ammos_from_cam_hit_test: Array[RID] = []
 
 signal fire_hitscan_hit(weapon: Weapon, hit_pos: Vector3, collider: Node)
 signal fire_projectile_hit(weapon: Weapon, hit_pos: Vector3, collider: Node)
+signal fired(weapon: Weapon)
+signal reloading(weapon: Weapon)
+signal reloaded(weapon: Weapon)
 
 func _ready() -> void:
 	change_weapon(current_weapon_id)

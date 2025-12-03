@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://onyrk3cse2aw" path="res://weapons/shit-pistol/decal.tscn" id="1_26f5k"]
 [ext_resource type="PackedScene" uid="uid://cu02j0nnun01k" path="res://weapons/shit-pistol/shit-pistol.glb" id="1_vjhfg"]
-[ext_resource type="Script" uid="uid://ckf1jwcbvo6dj" path="res://scripts/3d/fps/weapon.gd" id="2_vjhfg"]
+[ext_resource type="Script" uid="uid://ckf1jwcbvo6dj" path="res://scripts/3d/weapon.gd" id="2_vjhfg"]
 
 [resource]
 script = ExtResource("2_vjhfg")
