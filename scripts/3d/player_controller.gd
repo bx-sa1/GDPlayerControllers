@@ -16,7 +16,7 @@ enum ControllerType { FIRST_PERSON, THIRD_PERSON, PLATFORMER }
 		if v != null:
 			v.yawed.connect(_on_camera_manager_yawed)
 			v.pitched.connect(_on_camera_manager_pitched)
-@export var visual: VisualInstance3D
+@export var visual: Node3D
 
 @export var MOVE_SPEED = 32
 @export var MOVE_ACCEL = 10

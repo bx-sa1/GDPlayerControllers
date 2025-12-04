@@ -14,6 +14,7 @@ signal fired(weapon: Weapon)
 signal reloading(weapon: Weapon)
 signal reloaded(weapon: Weapon)
 
+
 func _ready() -> void:
 	change_weapon(current_weapon_id)
 
@@ -25,11 +26,11 @@ func _process(delta: float) -> void:
 	if weapon_list[current_weapon_id].auto:
 		if Input.is_action_pressed("fire"):
 			print("AutoFire")
-			fire()
+			fired.emit(get_current_weapon)
 	else:
 		if Input.is_action_just_pressed("fire"):
 			print("No AutoFire")
-			fire()
+			fired.emit(get_current_weapon)
 
 	weapon_list[current_weapon_id].update(delta)
 
@@ -139,3 +140,6 @@ func _on_ammo_tree_exited(rid: RID):
 func _on_ammo_hit(ammo: Ammo, body: Node):
 	fire_projectile_hit.emit(ammo.from_weapon, ammo.global_position, body)
 	add_decal_to_world(ammo.from_weapon, ammo.global_position)
+
+func get_current_weapon() -> Weapon:
+	return weapon_list[current_weapon_id]

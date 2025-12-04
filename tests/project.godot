@@ -15,6 +15,10 @@ run/main_scene="uid://ce81d11emkmk4"
 config/features=PackedStringArray("4.5", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[filesystem]
+
+import/blender/enabled=false
+
 [input]
 
 move_left={

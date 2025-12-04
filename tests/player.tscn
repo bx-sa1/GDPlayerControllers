@@ -1,21 +1,16 @@
-[gd_scene load_steps=12 format=3 uid="uid://bo06ihr0dons1"]
+[gd_scene load_steps=11 format=3 uid="uid://bo06ihr0dons1"]
 
 [ext_resource type="Script" uid="uid://cxap5ihgnnwlq" path="res://scripts/3d/player_controller.gd" id="1_sweqy"]
+[ext_resource type="Texture2D" uid="uid://c32g42vwncrkc" path="res://textures/crosshair.png" id="2_1jxqw"]
 [ext_resource type="Script" uid="uid://of7rjyd6medn" path="res://scripts/3d/weapon_manager.gd" id="2_hqtel"]
 [ext_resource type="Script" uid="uid://ckf1jwcbvo6dj" path="res://scripts/3d/weapon.gd" id="3_sweqy"]
 [ext_resource type="Resource" uid="uid://mfquymcmw27j" path="res://weapons/shit-pistol/shit_pistol_data.tres" id="4_1jxqw"]
 [ext_resource type="Script" uid="uid://dlq2qxhg2j3il" path="res://scripts/3d/camera_manager.gd" id="5_2hs0m"]
+[ext_resource type="PackedScene" uid="uid://dde0mtrli72gw" path="res://models/player/unreal_mannequin_for_scale_reference/scene.gltf" id="6_2hs0m"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_v5isc"]
-
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_vqipf"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kx1co"]
-albedo_texture = SubResource("PlaceholderTexture2D_vqipf")
-texture_filter = 2
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_dey15"]
-material = SubResource("StandardMaterial3D_kx1co")
+radius = 1.1220703
+height = 8.184906
 
 [sub_resource type="GDScript" id="GDScript_hqtel"]
 script/source = "extends Control
@@ -43,16 +38,11 @@ func _process(delta: float) -> void:
 script = ExtResource("1_sweqy")
 weapon_manager = NodePath("WeaponManager")
 camera_manager = NodePath("CameraManager")
-visual = NodePath("MeshInstance3D")
+visual = NodePath("Sketchfab_Scene")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.99999994, 2.9802322e-08, 0, -2.9802322e-08, 0.99999994, 0, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.0876923, -1.09192115e-07)
 shape = SubResource("CapsuleShape3D_v5isc")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.99999994, 2.9802322e-08, 0, -2.9802322e-08, 0.99999994, 0, 0, 0)
-mesh = SubResource("CapsuleMesh_dey15")
-skeleton = NodePath("")
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 3
@@ -77,8 +67,23 @@ text = "Weapon: %s"
 layout_mode = 2
 text = "Ammo: %s/%s"
 
+[node name="TextureRect" type="TextureRect" parent="Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_1jxqw")
+
 [node name="CameraManager" type="SpringArm3D" parent="." node_paths=PackedStringArray("camera")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6907801, -0.5116887)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.69078, -0.6372285)
 shape = SubResource("SphereShape3D_sweqy")
 spring_length = 10.0
 script = ExtResource("5_2hs0m")
@@ -95,3 +100,6 @@ weapon_list = Array[ExtResource("3_sweqy")]([ExtResource("4_1jxqw")])
 metadata/_custom_type_script = "uid://of7rjyd6medn"
 
 [node name="Marker3D" type="Marker3D" parent="WeaponManager"]
+
+[node name="Sketchfab_Scene" parent="." instance=ExtResource("6_2hs0m")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)

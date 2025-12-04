@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://urc2fxsjp7ds"
-path="res://.godot/imported/bullet_hole_0-631673330.png-449b1eb1e16f78a929cf627d68d609d0.ctex"
+uid="uid://buyh81c0wlqn"
+path="res://.godot/imported/texture_04.png-4413d96e34dd4d0af16fa15ced11d655.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://weapons/shit-pistol/bullet_hole_0-631673330.png"
-dest_files=["res://.godot/imported/bullet_hole_0-631673330.png-449b1eb1e16f78a929cf627d68d609d0.ctex"]
+source_file="res://textures/kenney_prototype-textures/PNG/Purple/texture_04.png"
+dest_files=["res://.godot/imported/texture_04.png-4413d96e34dd4d0af16fa15ced11d655.ctex"]
 
 [params]
 

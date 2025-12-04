@@ -1,0 +1,11 @@
+Model Information:
+* title:	Unreal Mannequin for Scale Reference
+* source:	https://sketchfab.com/3d-models/unreal-mannequin-for-scale-reference-b21b6b854a2144d29b909f22e683ad61
+* author:	Vanity (https://sketchfab.com/vanitydynamics)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Unreal Mannequin for Scale Reference" (https://sketchfab.com/3d-models/unreal-mannequin-for-scale-reference-b21b6b854a2144d29b909f22e683ad61) by Vanity (https://sketchfab.com/vanitydynamics) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
