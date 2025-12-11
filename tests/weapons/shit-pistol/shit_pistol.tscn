@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://xlqrkqkkpxfq"]
+
+[ext_resource type="PackedScene" uid="uid://cu02j0nnun01k" path="res://weapons/shit-pistol/shit-pistol.glb" id="1_no68t"]
+
+[node name="shit-pistol" instance=ExtResource("1_no68t")]
+
+[node name="handle_marker" type="Marker3D" parent="." index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.08444214, 0)

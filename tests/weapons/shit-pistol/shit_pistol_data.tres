@@ -1,13 +1,13 @@
 [gd_resource type="Resource" script_class="Weapon" load_steps=4 format=3 uid="uid://mfquymcmw27j"]
 
 [ext_resource type="PackedScene" uid="uid://onyrk3cse2aw" path="res://weapons/shit-pistol/decal.tscn" id="1_26f5k"]
-[ext_resource type="PackedScene" uid="uid://cu02j0nnun01k" path="res://weapons/shit-pistol/shit-pistol.glb" id="1_vjhfg"]
-[ext_resource type="Script" uid="uid://ckf1jwcbvo6dj" path="res://scripts/3d/weapon.gd" id="2_vjhfg"]
+[ext_resource type="PackedScene" uid="uid://xlqrkqkkpxfq" path="res://weapons/shit-pistol/shit_pistol.tscn" id="2_26f5k"]
+[ext_resource type="Script" uid="uid://ckf1jwcbvo6dj" path="res://scripts/weapons/res_weapon.gd" id="2_vjhfg"]
 
 [resource]
 script = ExtResource("2_vjhfg")
 name = "Shit Pistol"
-scene = ExtResource("1_vjhfg")
+scene = ExtResource("2_26f5k")
 ammo_hit_decal = ExtResource("1_26f5k")
 type = 1
 max_ammo_count = 40

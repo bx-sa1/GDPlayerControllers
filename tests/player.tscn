@@ -1,105 +1,74 @@
-[gd_scene load_steps=11 format=3 uid="uid://bo06ihr0dons1"]
+[gd_scene load_steps=12 format=3 uid="uid://bo06ihr0dons1"]
 
-[ext_resource type="Script" uid="uid://cxap5ihgnnwlq" path="res://scripts/3d/player_controller.gd" id="1_sweqy"]
-[ext_resource type="Texture2D" uid="uid://c32g42vwncrkc" path="res://textures/crosshair.png" id="2_1jxqw"]
-[ext_resource type="Script" uid="uid://of7rjyd6medn" path="res://scripts/3d/weapon_manager.gd" id="2_hqtel"]
-[ext_resource type="Script" uid="uid://ckf1jwcbvo6dj" path="res://scripts/3d/weapon.gd" id="3_sweqy"]
-[ext_resource type="Resource" uid="uid://mfquymcmw27j" path="res://weapons/shit-pistol/shit_pistol_data.tres" id="4_1jxqw"]
-[ext_resource type="Script" uid="uid://dlq2qxhg2j3il" path="res://scripts/3d/camera_manager.gd" id="5_2hs0m"]
-[ext_resource type="PackedScene" uid="uid://dde0mtrli72gw" path="res://models/player/unreal_mannequin_for_scale_reference/scene.gltf" id="6_2hs0m"]
+[ext_resource type="Script" uid="uid://dxcmi18ivv4o1" path="res://player.gd" id="1_sweqy"]
+[ext_resource type="Script" uid="uid://drulde1ec84hj" path="res://scripts/components/gravity_component.gd" id="4_sweqy"]
+[ext_resource type="Script" uid="uid://dksuroetqt32s" path="res://scripts/components/walk_component.gd" id="5_1jxqw"]
+[ext_resource type="Script" uid="uid://dlq2qxhg2j3il" path="res://scripts/camera/camera_controller.gd" id="5_2hs0m"]
+[ext_resource type="Script" uid="uid://b0jct33h5r1cr" path="res://scripts/components/jump_component.gd" id="6_2hs0m"]
+[ext_resource type="Script" uid="uid://gp7pi5lovebm" path="res://scripts/weapons/weapon_controller.gd" id="7_1jxqw"]
+[ext_resource type="Script" uid="uid://ckf1jwcbvo6dj" path="res://scripts/weapons/res_weapon.gd" id="8_b26j0"]
+[ext_resource type="PackedScene" uid="uid://cy36aygvs66pn" path="res://addons/gdquest_gobot/gobot_skin.tscn" id="9_b26j0"]
+[ext_resource type="Resource" uid="uid://di1a5px62283r" path="res://weapons/glock/glock.tres" id="9_n7ghd"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_v5isc"]
-radius = 1.1220703
-height = 8.184906
+radius = 0.47558594
+height = 1.430481
 
-[sub_resource type="GDScript" id="GDScript_hqtel"]
-script/source = "extends Control
+[sub_resource type="SphereShape3D" id="SphereShape3D_n7ghd"]
 
-@onready var ammo = $WeaponInfo/Ammo
-@onready var weapon_name = $\"WeaponInfo/Weapon Name\"
-@onready var weapon_manager = $\"../WeaponManager\"
-
-var weapon_name_format = \"\"
-var ammo_format = \"\"
-
-func _ready() -> void:
-	weapon_name_format = weapon_name.text
-	ammo_format = ammo.text
-	
-func _process(delta: float) -> void:
-	var weapon = weapon_manager.weapon_list[weapon_manager.current_weapon_id]
-	self.ammo.text = ammo_format % [weapon.ammo_count, weapon.max_ammo_count]
-	self.weapon_name.text = weapon_name_format % weapon.name
-"
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_sweqy"]
-
-[node name="PlatformerController" type="CharacterBody3D" node_paths=PackedStringArray("weapon_manager", "camera_manager", "visual")]
+[node name="CharacterController" type="CharacterBody3D" node_paths=PackedStringArray("weapon_controller", "jump_component", "camera_controller", "visual", "collision", "components")]
+collision_layer = 2
 script = ExtResource("1_sweqy")
-weapon_manager = NodePath("WeaponManager")
-camera_manager = NodePath("CameraManager")
-visual = NodePath("Sketchfab_Scene")
+weapon_controller = NodePath("WeaponController")
+jump_component = NodePath("JumpComponent")
+debug = true
+camera_controller = NodePath("CameraController")
+visual = NodePath("GobotSkin")
+collision = NodePath("CollisionShape3D")
+max_step_height = 1.2
+components = [NodePath("WalkComponent"), NodePath("GravityComponent"), NodePath("JumpComponent")]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.0876923, -1.09192115e-07)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.71020794, -1.09192115e-07)
 shape = SubResource("CapsuleShape3D_v5isc")
 
-[node name="Control" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-script = SubResource("GDScript_hqtel")
+[node name="GobotSkin" parent="." instance=ExtResource("9_b26j0")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
 
-[node name="WeaponInfo" type="BoxContainer" parent="Control"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-vertical = true
+[node name="Marker3D" type="Marker3D" parent="GobotSkin"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.26018453, 0.2631691, 0)
 
-[node name="Weapon Name" type="Label" parent="Control/WeaponInfo"]
-layout_mode = 2
-text = "Weapon: %s"
-
-[node name="Ammo" type="Label" parent="Control/WeaponInfo"]
-layout_mode = 2
-text = "Ammo: %s/%s"
-
-[node name="TextureRect" type="TextureRect" parent="Control"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -20.0
-offset_right = 20.0
-offset_bottom = 20.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("2_1jxqw")
-
-[node name="CameraManager" type="SpringArm3D" parent="." node_paths=PackedStringArray("camera")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.69078, -0.6372285)
-shape = SubResource("SphereShape3D_sweqy")
-spring_length = 10.0
+[node name="CameraController" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.931, 0)
 script = ExtResource("5_2hs0m")
-camera = NodePath("Camera3D")
 metadata/_custom_type_script = "uid://dlq2qxhg2j3il"
 
-[node name="Camera3D" type="Camera3D" parent="CameraManager"]
-near = 0.001
+[node name="SpringArm3D" type="SpringArm3D" parent="CameraController"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.1032766, 0.81968415, 0)
+shape = SubResource("SphereShape3D_n7ghd")
+spring_length = 10.0
 
-[node name="WeaponManager" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.25879896, 0.6907801, -0.82185817)
-script = ExtResource("2_hqtel")
-weapon_list = Array[ExtResource("3_sweqy")]([ExtResource("4_1jxqw")])
-metadata/_custom_type_script = "uid://of7rjyd6medn"
+[node name="Camera3D" type="Camera3D" parent="CameraController/SpringArm3D"]
+current = true
 
-[node name="Marker3D" type="Marker3D" parent="WeaponManager"]
+[node name="GravityComponent" type="Node" parent="."]
+script = ExtResource("4_sweqy")
+always_active = true
+metadata/_custom_type_script = "uid://drulde1ec84hj"
 
-[node name="Sketchfab_Scene" parent="." instance=ExtResource("6_2hs0m")]
-transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
+[node name="WalkComponent" type="Node" parent="."]
+script = ExtResource("5_1jxqw")
+always_active = true
+metadata/_custom_type_script = "uid://dksuroetqt32s"
+
+[node name="JumpComponent" type="Node" parent="." node_paths=PackedStringArray("gravity_component")]
+script = ExtResource("6_2hs0m")
+gravity_component = NodePath("../GravityComponent")
+metadata/_custom_type_script = "uid://b0jct33h5r1cr"
+
+[node name="WeaponController" type="Node3D" parent="." node_paths=PackedStringArray("parent_node")]
+script = ExtResource("7_1jxqw")
+parent_node = NodePath("../GobotSkin/Marker3D")
+weapon_list = Array[ExtResource("8_b26j0")]([ExtResource("9_n7ghd")])
+fire_from_center_of_screen = true
+metadata/_custom_type_script = "uid://gp7pi5lovebm"
