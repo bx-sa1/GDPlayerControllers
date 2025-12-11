@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="Weapon" load_steps=4 format=3 uid="uid://di1a5px62283r"]
+
+[ext_resource type="PackedScene" uid="uid://onyrk3cse2aw" path="res://weapons/shit-pistol/decal.tscn" id="1_x5ckq"]
+[ext_resource type="PackedScene" uid="uid://c63dnkeiar5jt" path="res://weapons/glock/glock_22_gen_4.tscn" id="2_x5ckq"]
+[ext_resource type="Script" uid="uid://ckf1jwcbvo6dj" path="res://scripts/weapons/res_weapon.gd" id="3_7vhwb"]
+
+[resource]
+script = ExtResource("3_7vhwb")
+name = "Glock"
+scene = ExtResource("2_x5ckq")
+ammo_hit_decal = ExtResource("1_x5ckq")
+type = 1
+max_ammo_count = 22
+fire_ammount = 1
+fire_range = 20.0
+fire_rate = 5.0
+spread = 3.0
+reload_time = 5.0
+metadata/_custom_type_script = "uid://ckf1jwcbvo6dj"

@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://c63dnkeiar5jt"]
+
+[ext_resource type="PackedScene" uid="uid://bdb4t5q686cci" path="res://weapons/glock/glock-22-gen4.glb" id="1_a24d7"]
+
+[node name="glock-22-gen4" instance=ExtResource("1_a24d7")]
+
+[node name="fire_point_marker" type="Marker3D" parent="." index="5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.06843948, -0.13043213)
+
+[node name="handle_marker" type="Marker3D" parent="." index="6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.046554565, 0.08244324)
